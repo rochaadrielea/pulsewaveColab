@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "262940002970",
+    "project_id": "temple-guard-project",
+    "storage_bucket": "temple-guard-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262940002970:android:f223768eb468657beced23",
+        "android_client_info": {
+          "package_name": "ch.pulsewave.temple_guard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262940002970-so6kfd2seg30qn5fg741ahr0mo5uruma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3s4ARXTYt69pwxmXGwSgA_Mudha_PhqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262940002970-so6kfd2seg30qn5fg741ahr0mo5uruma.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262940002970-2mpdp1ek5jnfi4gqo154nstsso3kb48h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ch.pulsewave.templeGuard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

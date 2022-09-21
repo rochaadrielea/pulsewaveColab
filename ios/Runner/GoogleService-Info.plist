@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>262940002970-2mpdp1ek5jnfi4gqo154nstsso3kb48h.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.262940002970-2mpdp1ek5jnfi4gqo154nstsso3kb48h</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAWufa-mhNUVggw7UG4ZhKMczdcwrxySf0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>262940002970</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ch.pulsewave.templeGuard</string>
+	<key>PROJECT_ID</key>
+	<string>temple-guard-project</string>
+	<key>STORAGE_BUCKET</key>
+	<string>temple-guard-project.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:262940002970:ios:865e701d50c9443feced23</string>
+</dict>
+</plist>

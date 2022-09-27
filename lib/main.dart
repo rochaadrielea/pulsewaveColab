@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:temple_guard/View/verify_email_view.dart';
 
 import 'package:temple_guard/View/view_login.dart';
+import 'package:temple_guard/View/view_logout.dart';
+import 'package:temple_guard/Bluetooth/bluetooth_connection.dart';
 
 import 'View/register_view.dart';
 import 'firebase_options.dart';
@@ -30,12 +32,14 @@ class TempleGuardApp extends StatelessWidget {
         primarySwatch: Colors.blue,*/
         ),
       ),
-     // home: const Homepage(),
+      //home: const Homepage(),// verify email view
      // home: const LoginView(),
-      home: const RegisterView  (),
+      //home: const RegisterView  (),
+      home: const BluetoothTempleGuard(),
       routes: {
         '/Login/': (context) => const LoginView(),
-        '/Register/': (context) => const RegisterView()
+        '/Register/': (context) => const RegisterView(),
+       '/Logout/': (context) => const LogoutView()
       },
     );
   }

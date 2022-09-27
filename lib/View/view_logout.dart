@@ -1,19 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:temple_guard/View/register_view.dart';
 import '../firebase_options.dart';
 import 'verify_email_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class LogoutView extends StatefulWidget {
+  const LogoutView({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => LoginViewState();
+  State<LogoutView> createState() => LogoutViewState();
 }
 
 ///********************HomePageState Class ********************
-class LoginViewState extends State<LoginView> {
+class LogoutViewState extends State<LogoutView> {
   late final TextEditingController _email;
   late final TextEditingController _passaword;
   @override
@@ -30,14 +29,12 @@ class LoginViewState extends State<LoginView> {
     _email.dispose();
     _passaword.dispose();
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // is the owner of the homepage
-      appBar: AppBar(title: const Text('Login to Your Temple Guard')),
+      appBar: AppBar(title: const Text('Risk Group settings')),
       body: FutureBuilder(
           future: Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform,
@@ -60,47 +57,35 @@ results of your future whether it has it started is it processing is it*/
               //equation then in itself is true then the user is verified
               {
                 if (user.emailVerified) {
-                 
-
-
-                 
                   return  Column(children: [
-                   const TextField(
-  decoration: InputDecoration(
-    border: OutlineInputBorder(),
-    hintText: 'Enter your name',
-  ),
-),
                         TextButton(
                             onPressed: (() {
-                             // Navigator.of(context).pushNamedAndRemoveUntil(
-                               //   '/Login/', (route) => false);
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/Login/', (route) => false);
                             }),
                             child:
-                                const Text('Email alredy verified'))
+                                const Text('Email alredy verified. Login Here'))
                       ]);
                 } else {
                   return Column(children: [
                    TextButton(
                             onPressed: (() {
+                              FirebaseAuth.instance.signOut();
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/Register/', (route) => false);
+                                  '/Login/', (route) => false);
                             }),
                             child:
-                                const Text('Register with other email'),
+                                const Text('Login Here '),
                                ),
                                   TextButton(
-                        onPressed: (()async {
+                        onPressed: (() {
                           user.sendEmailVerification();
-                       
-                        
 
-                          Navigator.of(context).pushNamedAndRemoveUntil('/Logout/', (route) => false);
-                       
-                        }
-                        ), 
+                          //Navigator.of(context).pushNamedAndRemoveUntil('/Login/', (route) => false);
+                          
+                        }), 
                       
-                      child: const Text('Email not verified, Send Email Verification'))
+                      child: const Text('Email not verified, please very your email to proceed '))
                       ]);
                 }
               }

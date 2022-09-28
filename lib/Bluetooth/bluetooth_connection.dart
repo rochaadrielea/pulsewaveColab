@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:location_permissions/location_permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:temple_guard/Bluetooth/src/nearby.dart';
 
 
 
@@ -46,7 +47,7 @@ print('STARTED I DID NOT SCAN YET');
     if (permGranted) {
       _scanStream = flutterReactiveBle
           .scanForDevices(withServices: []).listen((device) {
-                 print('looking for device');
+                 print('_scanStream looking for device');
         // Change this string to what you defined in Zephyr
      
       });
@@ -95,6 +96,7 @@ print('STARTED I DID NOT SCAN YET');
       appBar: AppBar(title: const Text(' Connection Bluetooth')),
       backgroundColor: Colors.white,
       body: Container(),
+      
       persistentFooterButtons: [
         // We want to enable this button if the scan has NOT started
         // If the scan HAS started, it should be disabled.
@@ -107,6 +109,7 @@ print('STARTED I DID NOT SCAN YET');
                 onPressed: () {print('TRYING TO find  OTHER DEVICES');},
                 child: const Icon(Icons.search),
               )
+            
             // False condition
             : ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -129,7 +132,7 @@ print('STARTED I DID NOT SCAN YET');
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white, backgroundColor: Colors.grey, // foreground
                 ),
-                onPressed: () {},
+                onPressed: () {print('blue did not connect');},
                 child: const Icon(Icons.bluetooth),
               ),
       

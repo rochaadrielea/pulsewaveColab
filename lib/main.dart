@@ -7,6 +7,7 @@ import 'package:temple_guard/View/view_login.dart';
 import 'package:temple_guard/View/view_logout.dart';
 import 'package:temple_guard/Bluetooth/bluetooth_connection.dart';
 
+
 import 'View/register_view.dart';
 import 'firebase_options.dart';
 
@@ -35,7 +36,8 @@ class TempleGuardApp extends StatelessWidget {
       //home: const Homepage(),// verify email view
      // home: const LoginView(),
       //home: const RegisterView  (),
-      home: const BluetoothTempleGuard(),
+     home: const BluetoothTempleGuard(),
+     // home:  const Bluetempleguard(),
       routes: {
         '/Login/': (context) => const LoginView(),
         '/Register/': (context) => const RegisterView(),

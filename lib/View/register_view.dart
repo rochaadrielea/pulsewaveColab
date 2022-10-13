@@ -73,6 +73,12 @@ results of your future whether it has it started is it processing is it
                               .createUserWithEmailAndPassword(
                                   email: email, password: password);
                           print(usercreadentials);
+                          const registerpressed=true;
+            if(registerpressed==true){
+            await FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/Login/',
+               (_) => false,);}
                        /* } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('Weak Password');

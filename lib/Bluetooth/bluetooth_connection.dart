@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
@@ -24,6 +25,8 @@ class BluetoothTempleGuardState extends State<BluetoothTempleGuard> {
   late DiscoveredDevice _ubiqueDevice;
   final flutterReactiveBle = FlutterReactiveBle();
   late StreamSubscription<DiscoveredDevice> _scanStream;
+  
+  get results => null;
  
 // These are the UUIDs of your device
 
@@ -47,7 +50,8 @@ print('STARTED I DID NOT SCAN YET');
     if (permGranted) {
       _scanStream = flutterReactiveBle
           .scanForDevices(withServices: []).listen((device) {
-                 print('_scanStream looking for device');
+                 print('_scanStream found device $device');
+                // find the devices 
         // Change this string to what you defined in Zephyr
      
       });
@@ -95,7 +99,10 @@ print('STARTED I DID NOT SCAN YET');
     return Scaffold(
       appBar: AppBar(title: const Text(' Connection Bluetooth')),
       backgroundColor: Colors.white,
-      body: Container(),
+      // ignore: prefer_const_literals_to_create_immutables
+      body:   Column(children: [     
+      ]),
+
       
       persistentFooterButtons: [
         // We want to enable this button if the scan has NOT started
@@ -106,7 +113,7 @@ print('STARTED I DID NOT SCAN YET');
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white, backgroundColor: Colors.blue, // foreground
                 ),
-                onPressed: () {print('TRYING TO find  OTHER DEVICES');},
+                onPressed: () {print('TRYING TO find  OTHER DEVICES ');},
                 child: const Icon(Icons.search),
               )
             
@@ -141,3 +148,4 @@ print('STARTED I DID NOT SCAN YET');
     );
   }
 }
+

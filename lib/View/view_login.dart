@@ -60,51 +60,7 @@ results of your future whether it has it started is it processing is it*/
               //equation then in itself is true then the user is verified
               {
                 if (user.emailVerified) {
-                 
-
-
-                 
-                  return  Column(children: [
-                   const TextField(
-  decoration: InputDecoration(
-    border: OutlineInputBorder(),
-    hintText: 'Enter your name',
-  ),
-),
-                        TextButton(
-                            onPressed: (() {
-                             // Navigator.of(context).pushNamedAndRemoveUntil(
-                               //   '/Login/', (route) => false);
-                            }),
-                            child:
-                                const Text('Email alredy verified'))
-                      ]);
-                } else {
-                  return Column(children: [
-                   TextButton(
-                            onPressed: (() {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/Register/', (route) => false);
-                            }),
-                            child:
-                                const Text('Register with other email'),
-                               ),
-                                  TextButton(
-                        onPressed: (()async {
-                          user.sendEmailVerification();
-                       
-                        
-
-                          Navigator.of(context).pushNamedAndRemoveUntil('/Logout/', (route) => false);
-                       
-                        }
-                        ), 
-                      
-                      child: const Text('Email not verified, Send Email Verification'))
-                      ]);
-                }
-              }
-                return Column(children: [
+   return Column(children: [
 
 
 
@@ -149,6 +105,37 @@ results of your future whether it has it started is it processing is it*/
                       }, //on pressed async
                       child: const Text('Log in to your account')
                       ),
+                      ]
+                      );
+                } else {
+                  return Column(children: [
+                   TextButton(
+                            onPressed: (() {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/Register/', (route) => false);
+                            }),
+                            child:
+                                const Text('Register with other email'),
+                               ),
+                                  TextButton(
+                        onPressed: (()async {
+                          user.sendEmailVerification();
+                       
+                        const verify=true;
+            if(verify==true){
+            await FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/Login/',
+               (_) => false,);}
+                       
+                        }
+                        ), 
+                      
+                      child: const Text('Email not verified, Send Email Verification'))
+                      ]);
+                }
+              }
+                
                       // after the button we want another rext button in case to the person didnt registered yet
 
                       TextButton(
@@ -157,12 +144,12 @@ results of your future whether it has it started is it processing is it*/
                           
                         }), 
                       
-                      child: const Text('Not registered yet? Register Here'))
+                      child: const Text('Not registered yet? Register Here'));
                       
-                ]
                 
                 
-                );
+                return VerifyEmailView(); 
+                
               default:
                 return const Text('Loading');
             }

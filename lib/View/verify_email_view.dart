@@ -17,18 +17,14 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           const Text(          
             'ACTION NEED: Please verify your email'),
            TextButton(
-            onPressed:  () async{//when the button child is pressed what I need to do 
-            
-            final user=FirebaseAuth.instance.currentUser;
-           
+            onPressed:  () async{//when the button child is pressed what I need to do             
+            final user=FirebaseAuth.instance.currentUser;           
             await user?.sendEmailVerification();
-          
-              print('I AM HEREEEE');
+                    
             await FirebaseAuth.instance.signOut();
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/Login/',
-               (_) => false,);
-    
+               (_) => false,);   
       /*          
     a future void so as you know calling a function that returns a future void does not invoke the future
      it only tells the function to return the future,  so if you actually want the future to be executed

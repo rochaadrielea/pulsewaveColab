@@ -52,14 +52,14 @@ results of your future whether it has it started is it processing is it*/
 
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
+             final user = FirebaseAuth.instance.currentUser;
               print(user);
 
-              if (user !=
+             /* if (user !=
                   null) //verification could be read as true or false and if you can't use false if the
               //equation then in itself is true then the user is verified
-              {
-                if (user.emailVerified) {
+              {*/
+                //if (user.emailVerified) {
    return Column(children: [
 
 
@@ -90,8 +90,11 @@ results of your future whether it has it started is it processing is it*/
                           final usercredentials = FirebaseAuth.instance
                               .signInWithEmailAndPassword(
                                   email: email, password: password);
+                                   Navigator.of(context).pushNamedAndRemoveUntil(
+              '/Form/',
+               (_) => false,); 
                                  
-                          print(usercredentials);// it is not printing
+                        //  print(usercredentials);// it is not printing
                     
                        /* } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
@@ -105,9 +108,24 @@ results of your future whether it has it started is it processing is it*/
                       }, //on pressed async
                       child: const Text('Log in to your account')
                       ),
+
+                      TextButton(
+                        onPressed: (() {
+                          Navigator.of(context).pushNamedAndRemoveUntil('/Register/', (route) => false);
+                          
+                        }), 
+                      
+                      child: const Text('Not registered yet? Register Here'))
                       ]
                       );
-                } else {
+                //} 
+                
+                 /*
+                 final usernull = FirebaseAuth.instance.currentUser;
+              print(usernull);
+
+              if (usernull ==
+                  null)  {
                   return Column(children: [
                    TextButton(
                             onPressed: (() {
@@ -117,6 +135,10 @@ results of your future whether it has it started is it processing is it*/
                             child:
                                 const Text('Register with other email'),
                                ),
+                                  
+                                  
+                                  
+                                  
                                   TextButton(
                         onPressed: (()async {
                           user.sendEmailVerification();
@@ -126,30 +148,31 @@ results of your future whether it has it started is it processing is it*/
             await FirebaseAuth.instance.signOut();
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/Login/',
-               (_) => false,);}
+               (_) => false,);
+               
+               }
                        
                         }
                         ), 
                       
                       child: const Text('Email not verified, Send Email Verification'))
-                      ]);
-                }
-              }
+
+                      ]
+                      
+                      );
+                      
+                }*/
+             // }
+              
                 
                       // after the button we want another rext button in case to the person didnt registered yet
 
-                      TextButton(
-                        onPressed: (() {
-                          Navigator.of(context).pushNamedAndRemoveUntil('/Register/', (route) => false);
-                          
-                        }), 
                       
-                      child: const Text('Not registered yet? Register Here'));
                       
                 
-                
-                return VerifyEmailView(); 
-                
+              
+             
+                                 
               default:
                 return const Text('Loading');
             }
@@ -157,6 +180,10 @@ results of your future whether it has it started is it processing is it*/
           //isntead create we will sign in final usercreadentials=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
                
          
+  
     );
+    
+    
   }
+  
 }

@@ -41,6 +41,7 @@ dependencies:
   flutter_bluetooth_serial: ^0.4.0
   flutter_blue: ^0.8.0
   flutter_reactive_ble: ^5.0.2
+  flutter_scan_bluetooth: ^2.1.2
  
 
 dev_dependencies:

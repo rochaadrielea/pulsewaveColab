@@ -1,8 +1,10 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-
+import 'dart:async';
+import 'dart:convert' show utf8;
 
 
 class TempleGuardBluetooth extends StatelessWidget {
@@ -33,7 +35,7 @@ class BlueHomePage extends StatefulWidget {
 
 class _BlueHomePageState extends State<BlueHomePage> {
   final _writeController = TextEditingController();
-  late BluetoothDevice _connectedDevice;
+   BluetoothDevice? _connectedDevice;
   late List<BluetoothService> _services;
 
   
@@ -41,6 +43,9 @@ class _BlueHomePageState extends State<BlueHomePage> {
     if (!widget.devicesList.contains(device)) {
       setState(() {
         widget.devicesList.add(device);
+
+
+
       });
     }
   }
@@ -63,6 +68,16 @@ class _BlueHomePageState extends State<BlueHomePage> {
     });
     widget.flutterBlue.startScan();
   }
+
+ String dataParser(List<int> dataFromDevice) {
+    return utf8.decode(dataFromDevice);
+  }
+
+
+
+
+
+
 
   ListView _buildListViewOfDevices() {
     List<Container> containers =  List<Container>.empty(growable: true);
@@ -116,6 +131,14 @@ class _BlueHomePageState extends State<BlueHomePage> {
     );
   }
 
+
+
+   
+
+
+
+
+
   List<ButtonTheme> _buildReadWriteNotifyButton(
       BluetoothCharacteristic characteristic) {
     List<ButtonTheme> buttons =  List<ButtonTheme>.empty(growable: true);
@@ -137,6 +160,15 @@ class _BlueHomePageState extends State<BlueHomePage> {
                   });
                 });
                 await characteristic.read();
+               
+          
+                  
+                      
+             var data = characteristic.lastValue;
+                        var currentValue = dataParser(data);
+                        print('WHATS IS INSIDE OF THE UUI HEART BEAT');
+                        print("REALDATA: $data");
+                        final temphumidata = currentValue.split(",");
                 sub.cancel();
               },
             ),
@@ -205,7 +237,10 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 characteristic.value.listen((value) {
                   widget.readValues[characteristic.uuid] = value;
                 });
+                        
                 await characteristic.setNotifyValue(true);
+                
+                //print(characteristic.uuid  );
               },
             ),
           ),

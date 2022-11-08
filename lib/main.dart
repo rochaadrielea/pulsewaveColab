@@ -3,7 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:temple_guard/Bluetooth/bluetest.dart';
+import 'package:temple_guard/Bluetooth/bluetest2.dart';
+import 'package:temple_guard/Bluetooth/src/bluetest.dart';
 import 'package:temple_guard/View/verify_email_view.dart';
 import 'package:temple_guard/View/view_form.dart';
 
@@ -43,7 +44,8 @@ class TempleGuardApp extends StatelessWidget {
       //home: FormView(),
      // home: const GroupRisks(),
       //home: const RegisterView  (),
-       home: const FlutterBlueApp(),
+      home: const TempleGuardBluetooth(),
+       //home: const FlutterBlueApp(),
     // home: const BluetoothTempleGuard(),
      // home:  const Bluetempleguard(),
       routes: {

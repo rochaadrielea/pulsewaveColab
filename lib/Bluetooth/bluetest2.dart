@@ -251,7 +251,9 @@ class DeviceScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          
           children: <Widget>[
+            
             StreamBuilder<BluetoothDeviceState>(
               stream: device.state,
               initialData: BluetoothDeviceState.connecting,
@@ -291,17 +293,17 @@ class DeviceScreen extends StatelessWidget {
               stream: device.mtu,
               initialData: 0,
               builder: (c, snapshot) => ListTile(
-                title: Text('MTU Size'),
+                title: const Text('MTU Size'),
                 subtitle: Text('${snapshot.data} bytes'),
                 trailing: IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   onPressed: () => device.requestMtu(223),
                 ),
               ),
             ),
             StreamBuilder<List<BluetoothService>>(
               stream: device.services,
-              initialData: [],
+              initialData: const [],
               builder: (c, snapshot) {
                 return Column(
                   children: _buildServiceTiles(snapshot.data!),
@@ -314,3 +316,5 @@ class DeviceScreen extends StatelessWidget {
     );
   }
 }
+
+

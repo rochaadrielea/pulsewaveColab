@@ -16,7 +16,7 @@ class TempleGuardBluetooth extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: BlueHomePage(title: 'Flutter BLE Demo'),
+        home: BlueHomePage(title: 'ANOTHER TEST Flutter BLE '),
       );
 }
 

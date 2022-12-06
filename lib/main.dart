@@ -3,8 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:temple_guard/Bluetooth/bluetest2.dart';
-import 'package:temple_guard/Bluetooth/src/bluetest.dart';
+
 import 'package:temple_guard/View/verify_email_view.dart';
 import 'package:temple_guard/View/view_form.dart';
 
@@ -14,7 +13,13 @@ import 'package:temple_guard/View/view_riskgroups.dart';
 
 
 
+import 'View/View_Horus.dart';
+import 'View/View_devices.dart';
+import 'View/clockview.dart';
+import 'View/other.dart';
 import 'View/register_view.dart';
+import 'View/test.dart';
+import 'View/view_read_hours.dart';
 import 'firebase_options.dart';
 
 void main() {
@@ -43,17 +48,22 @@ class TempleGuardApp extends StatelessWidget {
       //home: const LoginView(),
       //home: FormView(),
      // home: const GroupRisks(),
-      //home: const RegisterView  (),
-      home: const TempleGuardBluetooth(),
-       //home: const FlutterBlueApp(),
-    // home: const BluetoothTempleGuard(),
-     // home:  const Bluetempleguard(),
+     // home: const RegisterView  (),
+    // home: const TempleGuardBluetooth(),
+   home:  const ReadHoursWB(),
+   //  home: const pleaseWork(),
+    // home: const ReadHours(),
+    // home: const ClockView(),
+    // home: const DC_ClockRead(),
+    //home: const ViewHorusOnTheApp(),
+     
       routes: {
         '/Login/': (context) => const LoginView(),
         '/Register/': (context) => const RegisterView(),
        '/Logout/': (context) => const LogoutView(),
        '/Form/': (context) =>  FormView(),
        '/Risk/': (context) =>  const GroupRisks(),
+       
       },
     );
   }

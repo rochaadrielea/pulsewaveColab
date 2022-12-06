@@ -76,9 +76,9 @@ results of your future whether it has it started is it processing is it
                           const registerpressed=true;
             if(registerpressed==true){
             await FirebaseAuth.instance.signOut();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              '/Login/',
-               (_) => false,);}
+         //  Navigator.of(context).pushNamedAndRemoveUntil( '/Login/',   (_) => false,);
+           
+           }
                        /* } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('Weak Password');
@@ -96,7 +96,7 @@ results of your future whether it has it started is it processing is it
                       child: const Text('Register')),
                       TextButton(
                         onPressed: (() {
-                          Navigator.of(context).pushNamedAndRemoveUntil('/Login/', (route) => false);
+                          Navigator.of(context).pushNamedAndRemoveUntil('/Login/', (route) => true);
                           
                         }), 
                       

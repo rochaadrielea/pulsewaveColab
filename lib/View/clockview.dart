@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'dart:async';
 import 'dart:convert' show utf8;
 
+import '../firebase_options.dart';
 
-class TempleGuardBluetooth extends StatelessWidget {
-  const TempleGuardBluetooth({super.key});
+
+class ClockView extends StatelessWidget {
+  const ClockView({super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -18,6 +21,9 @@ class TempleGuardBluetooth extends StatelessWidget {
         ),
         home: BlueHomePage(title: 'ANOTHER TEST Flutter BLE '),
       );
+
+      
+       
 }
 
 class BlueHomePage extends StatefulWidget {
@@ -89,10 +95,9 @@ class _BlueHomePageState extends State<BlueHomePage> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(device.name == '' ? '(unknown device)' : device.name),
-                    Text(device.id.toString()),
-                  ],
-                ),
+                    Text( device.name),
+                   // Text(device.id.toString()),
+                  ],               ),
               ),
               ElevatedButton(
        
@@ -132,16 +137,11 @@ class _BlueHomePageState extends State<BlueHomePage> {
 
 
 
-   
-
-
-
-
-
   List<ButtonTheme> _buildReadWriteNotifyButton(
       BluetoothCharacteristic characteristic) {
     List<ButtonTheme> button =  List<ButtonTheme>.empty(growable: true);
 
+bool _isDisabled = false;
     if (characteristic.properties.read) {
       button.add(
         ButtonTheme(
@@ -151,127 +151,24 @@ class _BlueHomePageState extends State<BlueHomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: ElevatedButton (
               
-              child: const Text('READ', style: TextStyle(color: Colors.white)),
+              
               onPressed: () async {
-                var sub = characteristic.value.listen((value) {
-                  setState(() {
-                    widget.readValues[characteristic.uuid] = value;
-                  });
-                });
-                await characteristic.read();
-               
-       //   var matrix = List.generate(rows, (_) => List.generate(columns, (_) => {}))
-                  
-                      
-             var data = characteristic.lastValue;
-          
-                       
-                        var timewb= [data[4],data[5],data[6]];
-                        var a=0;
+             // Navigator.of(context).pushNamedAndRemoveUntil('/Register/', (route) => true);
+             print('oiiiiiiiiiiiii');
+             setState(() {
+               _isDisabled=true;
+             });
 
-                    
-                          for (a<900;;){
-     await characteristic.read();
-                             var sub = characteristic.value.listen((value) {
-                  setState(() {
-                    widget.readValues[characteristic.uuid] = value;
-                  });
-                  });
-                
-                
-               
-          
-                  
-                      
-             var data = characteristic.lastValue;
-                            timewb= [data[4],data[5],data[6]];
-                        
-                          print("the time is; $timewb");
-                          await Future.delayed(const Duration(seconds : 2));
-                          a=a+1;
-                          }
-                       
-                      
-                       
-                       // final temphumidata = currentValue.split(",");
-               // sub.cancel();
-              },
+            },
+child: const Text('READ', style: TextStyle(color: Colors.white)),
+
             ),
           ),
         ),
       );
     }
-   /* if (characteristic.properties.write) {
-      buttons.add(
-        ButtonTheme(
-          minWidth: 10,
-          height: 20,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: ElevatedButton (
-              child: const Text('WRITE', style: TextStyle(color: Colors.white)),
-              onPressed: () async {
-                await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Write"),
-                        content: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: TextField(
-                                controller: _writeController,
-                              ),
-                            ),
-                          ],
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text("Send"),
-                            onPressed: () {
-                              characteristic.write(
-                                  utf8.encode(_writeController.value.text));
-                              Navigator.pop(context);
-                            },
-                          ),
-                          TextButton(
-                            child: Text("Cancel"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
-            ),
-          ),
-        ),
-      );
-    }*/
-    /*if (characteristic.properties.notify) {
-      buttons.add(
-        ButtonTheme(
-          minWidth: 10,
-          height: 20,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: ElevatedButton(
-              child: const Text('NOTIFY', style: TextStyle(color: Colors.white)),
-              onPressed: () async {
-                characteristic.value.listen((value) {
-                  widget.readValues[characteristic.uuid] = value;
-                });
-                        
-                await characteristic.setNotifyValue(true);
-                
-                //print(characteristic.uuid  );
-              },
-            ),
-          ),
-        ),
-      );
-    }*/
+   
+   
 
     return button;
   }
@@ -339,7 +236,32 @@ class _BlueHomePageState extends State<BlueHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body:
-          _buildView(),
+        body: Column(
+      // ignore: prefer_const_literals_to_create_immutables
+      children: <Widget>[
+        const  Text("I WANT TO READURS "),
+         const AlertDialog(
+          title: Text('Counting Hours')
+        )
+      ]
+    )
+        //  _buildView(),
+          
+      );
+
+       Widget readhours(BuildContext context) => Scaffold(
+       body: FutureBuilder(
+          future: Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          ),
+          builder: (context, snapshot)  => const Text('WRITE'),
+      )
+      
       );
 }
+
+
+
+
+
+

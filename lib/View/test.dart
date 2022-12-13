@@ -152,7 +152,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
    
     return button;
   }
-//////
+////////
   _readingHours(BluetoothCharacteristic characteristic)  {
  var sub = characteristic.value.listen((value) {
                   setState(() {

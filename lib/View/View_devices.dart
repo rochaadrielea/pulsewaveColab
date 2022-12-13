@@ -77,7 +77,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 child: Column(
                   children: <Widget>[
                     Text(device.name == '' ? '(unknown device)' : device.name),
-                    Text(device.id.toString()),
+                   // Text(device.id.toString()),
                   ],
                 ),
               ),
@@ -140,7 +140,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 await characteristic.read();
                 sub.cancel();
                  var data = characteristic.lastValue;
-              
+              print(data);
               },
             ),
           ),

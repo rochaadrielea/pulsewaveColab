@@ -137,7 +137,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 sub.cancel();
                  var data = characteristic.lastValue;
                 var timewb= [data[4],data[5],data[6]];
-                print('AQUIIIIIIIIIII');
+                print('HOURS');
                 print(timewb);
               },
             ),

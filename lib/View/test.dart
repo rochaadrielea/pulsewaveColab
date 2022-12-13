@@ -131,16 +131,18 @@ class _BlueHomePageState extends State<BlueHomePage> {
               child: Text('READ', style: TextStyle(color: Colors.white)),
               onPressed: () async {
                 var sub = characteristic.value.listen((value) {
+
+                print('Time: $value');
                   setState(() {
                     widget.readValues[characteristic.uuid] = value;
                   });
                 });
                 await characteristic.read();
-                sub.cancel();
+                //sub.cancel();
                  var data = characteristic.lastValue;
-               /*  timew= [data[4],data[5],data[6]];
-                print('AQUIIIIIIIIIII');
-                print(timewb);*/
+               var timew= [data[4],data[5],data[6]];
+                print('TIME ON THE WB');
+                print(timew);
               },
             ),
           ),
@@ -150,7 +152,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
    
     return button;
   }
-
+//////
   _readingHours(BluetoothCharacteristic characteristic)  {
  var sub = characteristic.value.listen((value) {
                   setState(() {
@@ -186,7 +188,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 ),
                 Row  (
                   children: <Widget>  [
-                     _readingHours(characteristic),
+                    
                     ..._buildReadWriteNotifyButton(characteristic),
                   ],
                 ),
@@ -239,11 +241,4 @@ class _BlueHomePageState extends State<BlueHomePage> {
 
 
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}

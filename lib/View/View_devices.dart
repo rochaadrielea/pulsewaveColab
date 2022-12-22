@@ -250,7 +250,7 @@ discoverServices(characteristic) async {
   }
 
   List<int> data = await myImportantCharacteristic!.read();
-    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    print('Data is printing');
   print(data);
 }
 

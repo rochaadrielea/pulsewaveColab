@@ -51,7 +51,7 @@ class TempleGuardApp extends StatelessWidget {
      // home: const RegisterView  (),
     // home: const TempleGuardBluetooth(),
    //home:  const ReadHoursWB(),
-   //  home: const pleaseWork(),
+    // home: const pleaseWork(),
     // home: const ReadHours(),
     // home: const ClockView(),
      home: const DC_ClockRead(),

@@ -135,9 +135,9 @@ discoverServices(_services) async {
       myImportantCharacteristic = c;
   }
 
-  List<int> data = await myImportantCharacteristic!.read();
-    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-  print(data);
+ List<int> data = await myImportantCharacteristic!.read();
+    print('reading data');
+  print(data); 
 }
 
 

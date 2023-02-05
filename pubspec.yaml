@@ -44,6 +44,8 @@ dependencies:
   flutter_scan_bluetooth: ^2.1.2
   firebase: ^9.0.3
   analytics: ^1.0.2
+  permission_handler: ^10.2.0
+  path_provider: ^2.0.12
  
 
 dev_dependencies:
@@ -99,3 +101,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

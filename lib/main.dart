@@ -13,6 +13,7 @@ import 'package:temple_guard/View/view_riskgroups.dart';
 
 
 
+import 'Bluetooth/bluetest2.dart';
 import 'View/View_Horus.dart';
 import 'View/View_devices.dart';
 import 'View/clockview.dart';
@@ -21,6 +22,7 @@ import 'View/register_view.dart';
 import 'View/test.dart';
 import 'View/view_read_hours.dart';
 import 'firebase_options.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +56,8 @@ class TempleGuardApp extends StatelessWidget {
     // home: const pleaseWork(),
     // home: const ReadHours(),
     // home: const ClockView(),
-     home: const DC_ClockRead(),
+     home:  DC_ClockRead(storage: LocalDataStorage()),
+    // home:  const FindDevicesScreen(),
     //home: const ViewHorusOnTheApp(),
      
       routes: {
@@ -63,6 +66,7 @@ class TempleGuardApp extends StatelessWidget {
        '/Logout/': (context) => const LogoutView(),
        '/Form/': (context) =>  FormView(),
        '/Risk/': (context) =>  const GroupRisks(),
+       
        
       },
     );

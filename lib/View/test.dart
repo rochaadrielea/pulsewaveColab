@@ -1,25 +1,63 @@
 import 'dart:async';
-import 'dart:convert';
-
+import 'dart:io';//input e output
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
-class DC_ClockRead extends StatelessWidget {
-  const DC_ClockRead({super.key});
+class LocalDataStorage {
+  //Metodo obter caminho do arquivo
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
 
+    return directory.path;
+  }
+
+  //Metodo obter arquivo local
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    // print("o local do arquivo:" '$path');
+    // print(File('$path/arquivo.txt'));
+    return File('$path/arquivo.txt');
+  }
+
+  //Metodo de ler valor no arquivo
+  Future<Object> readValue() async {
+    try {
+      final file = await _localFile;
+      // Lendo o arquivo
+      String dataString = await file.readAsString();
+      return (dataString);
+    } catch (e) {
+      // Se encontrou erro retorna 0
+      return 0;
+    }
+  }
+
+  //Metodo de escrever valor no arquivo
+  Future<File> writeValue(String value) async {
+    final file = await _localFile;
+
+    // Escrevendo no arquivo
+    return file.writeAsString(value);
+  }
+}
+
+class DC_ClockRead extends StatelessWidget {
+  const DC_ClockRead({super.key, required this.storage});
+ final LocalDataStorage storage;
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'BLE Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: BlueHomePage(title: 'ANOTHER TEST Flutter BLE '),
+        home: BlueHomePage(title: 'Wecome to your Temple Guard ', storage: LocalDataStorage()),
       );
 }
 
 class BlueHomePage extends StatefulWidget {
-  BlueHomePage({Key? key, required this.title}) : super(key: key);
-
+  BlueHomePage({Key? key, required this.title, required this.storage}) : super(key: key);
+   final LocalDataStorage storage;
   final String title;
   final FlutterBlue flutterBlue = FlutterBlue.instance;
   final List<BluetoothDevice> devicesList =
@@ -34,7 +72,8 @@ class _BlueHomePageState extends State<BlueHomePage> {
   final _writeController = TextEditingController();
   BluetoothDevice? _connectedDevice;
   late List<BluetoothService> _services;
-
+  var timew;
+  String value_bluetooth = '';
   _addDeviceTolist(final BluetoothDevice device) {
     if (!widget.devicesList.contains(device)) {
       setState(() {
@@ -45,7 +84,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
 
   late Timer _timer;
   void startTimer(BluetoothCharacteristic characteristic) {
-    const oneSecond = Duration(seconds: 1);
+    const oneSecond = Duration(seconds: 3);
     _timer = Timer.periodic(
       oneSecond,
       (Timer timer) {
@@ -60,6 +99,11 @@ class _BlueHomePageState extends State<BlueHomePage> {
   @override
   void initState() {
     super.initState();
+    widget.storage.readValue().then((value) {
+      setState(() {
+        value_bluetooth = value as String;
+      });
+    });
     widget.flutterBlue.connectedDevices
         .asStream()
         .listen((List<BluetoothDevice> devices) {
@@ -73,7 +117,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
       }
     });
     widget.flutterBlue.startScan();
-    _buildListViewOfDevices();
+    
   }
 
   @override
@@ -93,7 +137,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(device.name == '' ? '(unknown device)' : device.name),
+                    Text(device.name == '' ? '' : device.name),
                     Text(device.id.toString()),
                   ],
                 ),
@@ -132,25 +176,45 @@ class _BlueHomePageState extends State<BlueHomePage> {
       ],
     );
   }
+// Function that get value of bluetooth that was printed before 
+  Future<File> _getBluetooth() {
+    setState(() {
+      value_bluetooth = '$value_bluetooth Time: ${timew}';
+    });
+
+    // Escreva a variável como uma string no arquivo.
+    return widget.storage.writeValue(value_bluetooth);
+  }
 
   _readCharacteristicValid(BluetoothCharacteristic characteristic) {
+  
     var sub = characteristic.value.listen((value) {
-      print('Time: $value');
+      //print('Time: $value');
       setState(() {
         widget.readValues[characteristic.uuid] = value;
+        
       });
     });
-    const oneSecond = Duration(seconds: 1);
+   const oneSecond = Duration(seconds: 1);
     _timer = Timer.periodic(oneSecond, (Timer timer) async {
       await characteristic.read();
       //sub.cancel();
-      var data = characteristic.lastValue;
-      print('TIME ON THE WB');
-      var timew = [data[4], data[5], data[6]];
-
-      print(timew);
-      // startTimer(characteristic);
+       const oneSecond = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSecond,
+      (Timer timer) {
+        var data = characteristic.lastValue;
+         timew = [data[4], data[5], data[6]];
+        print('TIME ON THE WB');
+        print(timew);
+      },
+    );
+    print("OIEEE ESTOU AQUI 1");
+    _getBluetooth();
+    print("Dados armazenamento:" + value_bluetooth);
+    print("OIEEE ESTOU AQUI 2");
     });
+ 
   }
 
   List<ButtonTheme> _buildReadWriteNotifyButton(
@@ -170,7 +234,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 _readCharacteristicValid(characteristic);
               },
             ),
-          ),
+          ), 
         ),
       );
     }
@@ -179,19 +243,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
   }
 
 ////////
-  _readingHours(BluetoothCharacteristic characteristic) {
-    var sub = characteristic.value.listen((value) {
-      setState(() {
-        widget.readValues[characteristic.uuid] = value;
-      });
-    });
-    characteristic.read();
-    sub.cancel();
-    var data = characteristic.lastValue;
-    var timew = [data[4], data[5], data[6]];
-    print(timew);
-    return timew;
-  }
+
 
   ListView _buildConnectDeviceView() {
     List<Container> containers = List<Container>.empty(growable: true);
@@ -229,6 +281,14 @@ class _BlueHomePageState extends State<BlueHomePage> {
                         widget.readValues[characteristic.uuid].toString()),
                   ],
                 ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text('Data: ' + value_bluetooth),
+                    ],
+                  ),
+                ),
+              
                 const Divider(),
               ],
             ),

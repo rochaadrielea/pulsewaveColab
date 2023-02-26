@@ -13,14 +13,14 @@ import 'package:temple_guard/View/view_riskgroups.dart';
 
 
 
-import 'Bluetooth/bluetest2.dart';
-import 'View/View_Horus.dart';
-import 'View/View_devices.dart';
-import 'View/clockview.dart';
-import 'View/other.dart';
+
+
+
+
+
 import 'View/register_view.dart';
 import 'View/test.dart';
-import 'View/view_read_hours.dart';
+
 import 'firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -52,8 +52,8 @@ class TempleGuardApp extends StatelessWidget {
      // home: const GroupRisks(),
      // home: const RegisterView  (),
     // home: const TempleGuardBluetooth(),
-   //home:  const ReadHoursWB(),
-    // home: const pleaseWork(),
+
+    
     // home: const ReadHours(),
     // home: const ClockView(),
      home:  DC_ClockRead(storage: LocalDataStorage()),

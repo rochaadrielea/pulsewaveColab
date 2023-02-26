@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';//input e output
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:http/http.dart' as http;
+import '../models/BluetoothDataHttp.dart';
 
 class LocalDataStorage {
   //Metodo obter caminho do arquivo
@@ -17,7 +20,8 @@ class LocalDataStorage {
     final path = await _localPath;
     // print("o local do arquivo:" '$path');
     // print(File('$path/arquivo.txt'));
-    return File('$path/arquivo.txt');
+    
+    return File('$path/arquivo3.txt');
   }
 
   //Metodo de ler valor no arquivo
@@ -45,6 +49,7 @@ class LocalDataStorage {
 class DC_ClockRead extends StatelessWidget {
   const DC_ClockRead({super.key, required this.storage});
  final LocalDataStorage storage;
+
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'BLE Demo',
@@ -73,7 +78,73 @@ class _BlueHomePageState extends State<BlueHomePage> {
   BluetoothDevice? _connectedDevice;
   late List<BluetoothService> _services;
   var timew;
+  var date;
+  var count;
+  // Parâmentros de metodo de escrita e leitura de arquivos do dispositivos.
   String value_bluetooth = '';
+  // Parâmetos de metodo de http
+  
+  final firstPartUrl = "https://temple-guard-project-default-rtdb.firebaseio.com/";
+  var lastPartUrl = "TimeBase.json";
+  final List<BluetoothDataHttp> _timeWB = [];
+  String dataConvert = '';
+  
+  var i=0;
+  //Função para concatenação de valores de tipo String da URL.
+  //fucntion to add the values type String of URL
+  String myURL() {   
+   int second=10;
+ late Timer _timer;  
+    const Second = Duration(seconds: 10);
+    _timer = Timer.periodic(
+      Second,
+      (Timer timer) {
+        i=second +i;
+       String stringValue = i.toString();
+        lastPartUrl = "${stringValue}TimeBase.json";
+      },
+    );
+  
+  
+    final url = firstPartUrl + lastPartUrl ;
+    return url;
+  }
+  // Initializing a class BluetoothDataHttp
+  BluetoothDataHttp bluetoothDataHttp = const BluetoothDataHttp(
+    id: '',
+    data: '',
+  );
+
+  // Função para enviar dados para a nuven
+  Future<void> uploadDataJOSN() async {
+    setState(() {
+      dataConvert = value_bluetooth;
+    });
+
+    final response = await http.post(
+      Uri.parse(myURL()),
+      body: jsonEncode(
+        {
+          "Time": dataConvert
+        },
+      ),
+    );
+
+    try {
+      print(jsonDecode(response.body));
+      final id = jsonDecode(response.body)["name"];
+      print(id);
+      _timeWB.add(
+        BluetoothDataHttp(
+          id: id,
+          data: bluetoothDataHttp.data,
+        ),
+      );
+    } catch (error) {
+      print(error);
+    }
+  }
+
   _addDeviceTolist(final BluetoothDevice device) {
     if (!widget.devicesList.contains(device)) {
       setState(() {
@@ -179,7 +250,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
 // Function that get value of bluetooth that was printed before 
   Future<File> _getBluetooth() {
     setState(() {
-      value_bluetooth = '$value_bluetooth Time: ${timew}';
+      value_bluetooth = 'Time: ${timew}';
     });
 
     // Escreva a variável como uma string no arquivo.
@@ -192,6 +263,7 @@ class _BlueHomePageState extends State<BlueHomePage> {
       //print('Time: $value');
       setState(() {
         widget.readValues[characteristic.uuid] = value;
+         
         
       });
     });
@@ -204,6 +276,8 @@ class _BlueHomePageState extends State<BlueHomePage> {
       oneSecond,
       (Timer timer) {
         var data = characteristic.lastValue;
+        date=[data[2], data[3]];
+         // String stringValue = data.toString();
          timew = [data[4], data[5], data[6]];
         print('TIME ON THE WB');
         print(timew);
@@ -212,6 +286,10 @@ class _BlueHomePageState extends State<BlueHomePage> {
     print("OIEEE ESTOU AQUI 1");
     _getBluetooth();
     print("Dados armazenamento:" + value_bluetooth);
+  
+    uploadDataJOSN();
+   
+    
     print("OIEEE ESTOU AQUI 2");
     });
  
@@ -234,8 +312,10 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 _readCharacteristicValid(characteristic);
               },
             ),
+
           ), 
         ),
+        
       );
     }
 
@@ -284,6 +364,11 @@ class _BlueHomePageState extends State<BlueHomePage> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
+                      FloatingActionButton(
+                        onPressed: uploadDataJOSN,
+                        tooltip: 'upload',
+                        child: const Icon(Icons.upload_file_sharp),
+                      ),
                       Text('Data: ' + value_bluetooth),
                     ],
                   ),

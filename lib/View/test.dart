@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import '../models/BluetoothDataHttp.dart';
 
 class LocalDataStorage {
+
   //Metodo obter caminho do arquivo
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -249,6 +250,8 @@ class _BlueHomePageState extends State<BlueHomePage> {
   }
 // Function that get value of bluetooth that was printed before 
   Future<File> _getBluetooth() {
+
+    
     setState(() {
       value_bluetooth = 'Time: ${timew}';
     });
